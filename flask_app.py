@@ -2,8 +2,6 @@ import json
 from flask import Flask, request
 import git
 
-# test again
-
 REPO_PATH_SERVER = "mysite/"
 
 
