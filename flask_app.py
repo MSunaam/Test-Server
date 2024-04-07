@@ -4,7 +4,12 @@ import git
 
 # test
 
+REPO_PATH_SERVER = "mysite/"
+
+
 app = Flask(__name__)
+
+app.config["REPO_PATH_SERVER"] = REPO_PATH_SERVER
 
 @app.route("/")
 def hello_world():
@@ -19,7 +24,7 @@ def webhook():
             return json.dumps({'msg': 'Hi!'}), 200
         if event != "push":
             return json.dumps({'msg': "Wrong event type"}), 400
-        repo = git.Repo('path/to/git_repo')
+        repo = git.Repo(app.config["REPO_PATH_SERVER"])
         origin = repo.remotes.origin
         origin.pull()
         return 'Updated PythonAnywhere successfully', 200
