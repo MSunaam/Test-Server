@@ -1,0 +1,25 @@
+Brotli @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/brotli-split_1699237319520/work
+certifi @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_3bzbkiv4h_/croot/certifi_1707229182618/work/certifi
+charset-normalizer @ file:///tmp/build/80754af9/charset-normalizer_1630003229654/work
+click @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/click_1699237822453/work
+filelock @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/filelock_1701804468261/work
+Flask @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_b4a2svwk0s/croot/flask_1702980026964/work
+idna @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/idna_1699237644810/work
+itsdangerous @ file:///tmp/build/80754af9/itsdangerous_1621432558163/work
+Jinja2 @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/jinja2_1707339916030/work
+MarkupSafe @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/markupsafe_1707339878470/work
+mpmath @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/mpmath_1699242500508/work
+networkx @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/networkx_1699242555148/work
+numpy @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_a51i_mbs7m/croot/numpy_and_numpy_base_1708638620867/work/dist/numpy-1.26.4-cp312-cp312-macosx_11_0_arm64.whl#sha256=37afb6b734a197702d848df93bd67c10b52f6467d56e518950d84b6b1c949d27
+pillow @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_e02b4k5qik/croot/pillow_1707233036487/work
+PySocks @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/pysocks_1699237568675/work
+PyYAML @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/pyyaml_1699240344586/work
+requests @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_b3tnputioh/croot/requests_1707355573919/work
+setuptools==68.2.2
+sympy @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_7cbpg8656h/croot/sympy_1701397648473/work
+torch==2.2.2
+torchvision==0.17.2
+typing_extensions @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_69pl5kwjzw/croot/typing_extensions_1705619923450/work
+urllib3 @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_aff2m3lasf/croot/urllib3_1707770561896/work
+Werkzeug @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_94_079eho7/croot/werkzeug_1706210081645/work
+wheel==0.41.2

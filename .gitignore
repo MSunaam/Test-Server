@@ -1,0 +1,6 @@
+# Igonre all the image files inside CropsDiseaseClassifier/uploads
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
