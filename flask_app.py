@@ -27,6 +27,8 @@ def infer_img()->str:
     string, file_name = upload_image(request, app.config)
     if file_name != "":
         prediction, confidence = inference(os.path.join(app.config["UPLOAD_FOLDER"], file_name))
+        # Delete the file after inference
+        os.remove(os.path.join(app.config["UPLOAD_FOLDER"], file_name))
         return json.dumps({"message": "Prediction Successful", "prediction": prediction, "confidence": confidence})
     else:
         return f"{string}"
