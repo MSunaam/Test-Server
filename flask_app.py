@@ -1,9 +1,10 @@
 from flask import Flask, request
 import os
+import json
 
 from CropsDiseaseClassifier.upload_file import upload_image
-
 from RootUtils.webhook import webhook
+from CropsDiseaseClassifier.inference import inference
 
 REPO_PATH_SERVER = "mysite/"
 UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'CropsDiseaseClassifier/uploads')
@@ -21,9 +22,14 @@ app.config["ALLOWED_SIZE"] = ALLOWED_SIZE
 def hello_world():
     return "<p>Hello, World!</p>"
 
-@app.route("/crops/upload_image", methods=["POST"])
-def upload_file()->str:
-    return upload_image(request, app.config)
+@app.route("/crops/infer_image", methods=["POST"])
+def infer_img()->str:
+    string, file_name = upload_image(request, app.config)
+    if file_name != "":
+        prediction, confidence = inference(os.path.join(app.config["UPLOAD_FOLDER"], file_name))
+        return json.dumps({"message": "Prediction Successful", "prediction": prediction, "confidence": confidence})
+    else:
+        return f"{string}"
 
 
 @app.route('/update_server', methods=['POST'])

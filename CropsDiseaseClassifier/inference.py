@@ -7,7 +7,7 @@ import argparse
 
 DEVICE = "cpu"
 NUM_CLASSES = 22
-PATH_TO_MODEL = '/content/drive/MyDrive/cropsClassifierCheckpoints/checkpoint_11_epoch_lr=0.000001_2.pth'
+PATH_TO_MODEL = "CropsDiseaseClassifier/checkpoint_11_epoch_lr=0.000001_2.pth"
 CLASSES = ['Cashew_anthracnose', 'Cashew_gumosis', 'Cashew_healthy', 'Cashew_leaf miner', 'Cashew_red rust', 'Cassava_bacterial blight', 'Cassava_brown spot', 'Cassava_green mite', 'Cassava_healthy', 'Cassava_mosaic', 'Maize_fall armyworm', 'Maize_grasshoper', 'Maize_healthy', 'Maize_leaf beetle', 'Maize_leaf blight', 'Maize_leaf spot', 'Maize_streak virus', 'Tomato_healthy', 'Tomato_leaf blight', 'Tomato_leaf curl', 'Tomato_septoria leaf spot', 'Tomato_verticulium wilt']
 
 
@@ -61,10 +61,7 @@ def inference(pathToImage):
         finalPrediction = CLASSES[maxProbIdx];
     
     print(f"Disease {finalPrediction} Confidence Level {(confidenceTesnor.tolist())[0][maxProbIdx]*100}%\n")
-    # imageFile = cv.imread(pathToImage,cv.IMREAD_UNCHANGED);
-    # image_np = np.array(imageFile)
-    # plt.imshow(image_np);
-    # plt.show()
+    return finalPrediction, round(confidenceTesnor.tolist()[0][maxProbIdx]*100, 2)
 
 
 
