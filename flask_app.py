@@ -1,11 +1,9 @@
 from flask import Flask, request
 import os
-from werkzeug.utils import secure_filename
 
 from CropsDiseaseClassifier.upload_file import upload_image
 
 from RootUtils.webhook import webhook
-from RootUtils.allowed_file import allowed_file
 
 REPO_PATH_SERVER = "mysite/"
 UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'CropsDiseaseClassifier/uploads')
