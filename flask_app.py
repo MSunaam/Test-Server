@@ -6,7 +6,7 @@ from CropsDiseaseClassifier.upload_file import upload_image
 from RootUtils.webhook import webhook
 from CropsDiseaseClassifier.inference import inference
 
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 
 REPO_PATH_SERVER = "mysite/"
 UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'CropsDiseaseClassifier/uploads')
@@ -27,14 +27,17 @@ def hello_world():
 
 @app.route("/crops/infer_image", methods=["POST"])
 def infer_img()->str:
-    string, file_name = upload_image(request, app.config)
-    if file_name != "":
-        prediction, confidence = inference(os.path.join(app.config["UPLOAD_FOLDER"], file_name))
-        # Delete the file after inference
-        os.remove(os.path.join(app.config["UPLOAD_FOLDER"], file_name))
-        return json.dumps({"message": "Prediction Successful", "prediction": prediction, "confidence": confidence})
-    else:
-        return f"{string}"
+    try:
+        string, file_name = upload_image(request, app.config)
+        if file_name != "":
+            prediction, confidence = inference(os.path.join(app.config["UPLOAD_FOLDER"], file_name))
+            # Delete the file after inference
+            os.remove(os.path.join(app.config["UPLOAD_FOLDER"], file_name))
+            return json.dumps({"message": "Prediction Successful", "prediction": prediction, "confidence": confidence})
+        else:
+            return f"{string}"
+    except Exception as e:
+        return json.dumps({"message": f"Error: {e}"})
 
 
 @app.route('/update_server', methods=['POST'])
