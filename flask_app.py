@@ -6,12 +6,15 @@ from CropsDiseaseClassifier.upload_file import upload_image
 from RootUtils.webhook import webhook
 from CropsDiseaseClassifier.inference import inference
 
+from flask_cors import CORS, cross_origin
+
 REPO_PATH_SERVER = "mysite/"
 UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'CropsDiseaseClassifier/uploads')
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 ALLOWED_SIZE = 16 * 1000 * 1000
 
 app = Flask(__name__)
+cors = CORS(app, resources={r"/crops/infer_image": {"origins": "*"}})
 
 app.config["REPO_PATH_SERVER"] = REPO_PATH_SERVER
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
