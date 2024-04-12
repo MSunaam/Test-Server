@@ -8,4 +8,4 @@ def npToImg64(npArray):
     noiseImg.save(noise_byte_array, format='PNG')
     noise_byte_array.seek(0)
 
-    return base64.b64encode(noise_byte_array.read()).decode('utf-8')
+    return f"data:image/png;base64,{base64.b64encode(noise_byte_array.read()).decode('utf-8')}"

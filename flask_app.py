@@ -61,7 +61,7 @@ def attack_image(attackMethod):
     noise_base64 = npToImg64(noiseImg)
 
 
-    return json.dumps({"message": "Attack Successful", "adversial_image": f"data:image/png;base64,{img_base64}", "adversial_class": className, "adversial_confidence": attackConf, "noiseImg":noise_base64})
+    return json.dumps({"message": "Attack Successful", "adversial_image": img_base64, "adversial_class": className, "adversial_confidence": attackConf, "noiseImg":noise_base64})
 
 
 @app.route('/update_server', methods=['POST'])
