@@ -1,9 +1,12 @@
 import os
+import sys
 import torch
 import torch.nn as nn
 from torchvision import transforms, models
 from PIL import Image
 import argparse
+
+import numpy as np
 
 DEVICE = "cpu"
 NUM_CLASSES = 22
@@ -63,6 +66,94 @@ def inference(pathToImage):
     print(f"Disease {finalPrediction} Confidence Level {(confidenceTesnor.tolist())[0][maxProbIdx]*100}%\n")
     return finalPrediction, round(confidenceTesnor.tolist()[0][maxProbIdx]*100, 2)
 
+def fgsm_attack(image, epsilon, gradient):
+  gradient_sign = gradient.sign()
+  noise = epsilon*gradient_sign;
+  perturbed_image = image + noise
+  return torch.clamp(perturbed_image,0,1),noise
+
+def pgd_attack(model, image, epsilon, truth_tensor,displayNoise=False):
+#   print("PGD attack ", truth_tensor)
+  numIters = 10
+  stepSize =2/255
+
+  for _ in range(numIters):
+    model.zero_grad()
+
+    output = model(image)
+    loss = nn.CrossEntropyLoss()(output, truth_tensor)
+    loss.backward(retain_graph=True)
+    gradient_sign = image.grad.sign()
+    noise = epsilon * gradient_sign;
+    perturbed_image = image + noise
+    inputTensor = torch.clamp(perturbed_image, image - epsilon, image + epsilon)
+    inputTensor = perturbed_image.detach().requires_grad_()
+
+  return inputTensor,noise
+
+def displayTensorImage(tensor):
+    tensor_to_pil = transforms.ToPILImage()(tensor)
+    # display(tensor_to_pil)
+    return np.array(tensor_to_pil)
+
+
+def simulateAttack(inputPath,fgsm=False, epsilon=0.03):
+
+    resnet = loadModel(PATH_TO_MODEL)
+    inputTensor = loadImage(inputPath)
+
+    resnet.eval()
+    with torch.no_grad():
+        output = resnet(inputTensor)
+        confidenceTesnor = torch.nn.Softmax(dim=1)(output).data
+        maxProbIdx = torch.argmax(confidenceTesnor,dim=1)
+        finalPrediction = CLASSES[maxProbIdx]
+
+    label = maxProbIdx
+    # print(label,file=sys.stderr)
+
+    criterion = nn.CrossEntropyLoss()
+    DEVICE = 'cpu'
+    resnet.to(DEVICE)
+
+    truth_tensor = label
+    inputTensor.requires_grad = True
+
+    output = resnet(inputTensor)
+
+    confidenceTensor = torch.nn.Softmax(dim=1)(output).data
+    maxProbIdx = torch.argmax(confidenceTensor,dim=1)
+    loss = criterion(output, truth_tensor)
+
+    #until this point for both attacks the process will be the same
+    resnet.zero_grad()
+    loss.backward()
+    gradients = inputTensor.grad
+
+    if fgsm==True:
+        inputTensor,noiseTensor = fgsm_attack(inputTensor,epsilon, gradients)
+    else:
+        inputTensor,noiseTensor = pgd_attack(resnet,inputTensor, epsilon, truth_tensor)
+
+    attack_image=inputTensor.squeeze(0)
+    noiseTensor = noiseTensor.squeeze(0)
+
+    output_adversial = resnet(inputTensor)
+
+    attackConfidenceTensor = torch.nn.Softmax(dim=1)(output_adversial).data
+
+    maxAttackProbIdx = torch.argmax(attackConfidenceTensor,dim=1)
+
+    # print(f"Output Label {classes[maxAttackProbIdx]}\nConfidence Level {(attackConfidenceTensor.tolist())[0][maxAttackProbIdx]*100}%")
+
+    return (
+        displayTensorImage(attack_image), # adversial image
+        CLASSES[maxAttackProbIdx], #adversial class
+        (attackConfidenceTensor.tolist())[0][maxAttackProbIdx]*100, # adversial confidence
+        displayTensorImage(noiseTensor), # noise tensor
+        CLASSES[maxProbIdx], # original class
+        (confidenceTensor.tolist())[0][maxProbIdx]*100, #original confidence
+        )
 
 
 if __name__ == "__main__":
@@ -77,3 +168,5 @@ if __name__ == "__main__":
     assert os.path.exists(imagePath), f"No file found at {imagePath}"
 
     inference(imagePath)
+
+
