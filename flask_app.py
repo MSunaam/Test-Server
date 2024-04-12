@@ -21,7 +21,7 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 ALLOWED_SIZE = 16 * 1000 * 1000
 
 app = Flask(__name__)
-cors = CORS(app, resources={r"/crops/infer_image": {"origins": "*"}})
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 app.config["REPO_PATH_SERVER"] = REPO_PATH_SERVER
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
