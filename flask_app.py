@@ -12,6 +12,8 @@ from CropsDiseaseClassifier.upload_file import upload_image
 from RootUtils.webhook import webhook
 from CropsDiseaseClassifier.inference import inference, simulateAttack
 
+#test
+
 
 REPO_PATH_SERVER = "mysite/"
 UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'CropsDiseaseClassifier/uploads')
