@@ -10,7 +10,7 @@ import numpy as np
 
 DEVICE = "cpu"
 NUM_CLASSES = 22
-PATH_TO_MODEL = os.path.join("CropsDiseaseClassifier/checkpoint_11_epoch_lr=0.000001_2.pth")
+PATH_TO_MODEL = os.path.join("/home/sunaam/mysite/","CropsDiseaseClassifier/checkpoint_11_epoch_lr=0.000001_2.pth")
 CLASSES = ['Cashew_anthracnose', 'Cashew_gumosis', 'Cashew_healthy', 'Cashew_leaf miner', 'Cashew_red rust', 'Cassava_bacterial blight', 'Cassava_brown spot', 'Cassava_green mite', 'Cassava_healthy', 'Cassava_mosaic', 'Maize_fall armyworm', 'Maize_grasshoper', 'Maize_healthy', 'Maize_leaf beetle', 'Maize_leaf blight', 'Maize_leaf spot', 'Maize_streak virus', 'Tomato_healthy', 'Tomato_leaf blight', 'Tomato_leaf curl', 'Tomato_septoria leaf spot', 'Tomato_verticulium wilt']
 
 
