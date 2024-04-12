@@ -18,4 +18,3 @@ def upload_image(request, appConfig)->str:
         return f"File uploaded successfully {filename}", filename
     else:
         return "File not allowed", ""
-    
