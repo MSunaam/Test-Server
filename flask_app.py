@@ -37,7 +37,7 @@ def infer_img()->str:
         else:
             return f"{string}"
     except Exception as e:
-        return json.dumps({"message": f"Error: {e}"}), 500
+        return json.dumps(f"Error: {e}"), 500
 
 
 @app.route('/update_server', methods=['POST'])
