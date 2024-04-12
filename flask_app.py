@@ -9,10 +9,9 @@ from markupsafe import escape
 from PIL import Image
 
 from CropsDiseaseClassifier.upload_file import upload_image
-from RootUtils.webhook import webhook
 from CropsDiseaseClassifier.inference import inference, simulateAttack
-
-#test
+from RootUtils.webhook import webhook
+from RootUtils.npToImg import npToImg64
 
 
 REPO_PATH_SERVER = "mysite/"
@@ -56,16 +55,13 @@ def attack_image(attackMethod):
     if file_name == "":
         return json.dumps({"message": "No file uploaded yet"}), 400
     img,className,attackConf,noiseImg,_,_ = simulateAttack(inputPath=(os.path.join(app.config["UPLOAD_FOLDER"], file_name)), fgsm=(attackMethod=="fgsm"))
-    
-    img = Image.fromarray(img)
-    img_byte_array = io.BytesIO()
-    img.save(img_byte_array, format='PNG')
-    img_byte_array.seek(0)
 
-    img_base64 = base64.b64encode(img_byte_array.read()).decode('utf-8')
+    img_base64 = npToImg64(img)
+
+    noise_base64 = npToImg64(noiseImg)
 
 
-    return json.dumps({"message": "Attack Successful", "adversial_image": f"data:image/png;base64,{img_base64}", "adversial_class": className, "adversial_confidence": attackConf})
+    return json.dumps({"message": "Attack Successful", "adversial_image": f"data:image/png;base64,{img_base64}", "adversial_class": className, "adversial_confidence": attackConf, "noiseImg":noise_base64})
 
 
 @app.route('/update_server', methods=['POST'])

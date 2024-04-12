@@ -149,7 +149,7 @@ def simulateAttack(inputPath,fgsm=False, epsilon=0.03):
     return (
         displayTensorImage(attack_image), # adversial image
         CLASSES[maxAttackProbIdx], #adversial class
-        (attackConfidenceTensor.tolist())[0][maxAttackProbIdx]*100, # adversial confidence
+       round((attackConfidenceTensor.tolist())[0][maxAttackProbIdx]*100,2), # adversial confidence
         displayTensorImage(noiseTensor), # noise tensor
         CLASSES[maxProbIdx], # original class
         (confidenceTensor.tolist())[0][maxProbIdx]*100, #original confidence
