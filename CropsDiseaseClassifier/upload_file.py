@@ -1,7 +1,7 @@
 import os
 from werkzeug.utils import secure_filename
 
-from RootUtils.allowed_file import allowed_file
+from RootUtils.allowed_file import allowed_file_crops
 
 def upload_image(request, appConfig)->str:
     if request.method != 'POST':
@@ -12,7 +12,7 @@ def upload_image(request, appConfig)->str:
     
     file = request.files['file']
 
-    if file and allowed_file(file.filename, appConfig, request):
+    if file and allowed_file_crops(file.filename, appConfig, request):
         filename = secure_filename(file.filename)
         file.save(os.path.join(appConfig['UPLOAD_FOLDER'], filename))
         return f"File uploaded successfully {filename}", filename
