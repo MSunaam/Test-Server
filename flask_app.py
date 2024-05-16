@@ -94,7 +94,10 @@ def upload_file():
         file_path = os.path.join(app.config['UPLOAD_FOLDER_HASH'], filename)
         file.save(file_path)
         encoder = Encoder(fileOrString=file_path, isFile=True)
-        return f"File Hash Value {encoder.getFinalHash()}", 200
+        return json.dumps({
+            "message": "Hash Successfull",
+            "hash": encoder.getFinalHash()
+            }), 200
         # return f"File uploaded successfully {filename}", 200
     else:
         return "File not allowed", ""

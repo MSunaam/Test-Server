@@ -5,3 +5,5 @@
 *.gif
 *.bmp
 *.pth
+
+__pycache__/
